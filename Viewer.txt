@@ -1,0 +1,7 @@
+Des de directori Viewer (Antigament NewViewer_1d403e6):
+
+CASA --> 
+	/home/nil/Documents/Q6/G-FIB/Viewer/GLarenaSL
+
+FIB -->
+	~/assig/grau‐g/Viewer/GLarenaSL
