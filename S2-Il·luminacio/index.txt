@@ -1,0 +1,12 @@
+Obligatoris
+   - Lighting 2
+   - Lighting 4
+   - Lighting 5
+   - Color Gradient 1
+   - Color Gradient 2
+   - Reverse Z 1
+   - Reverse Z 2
+   - Zoom
+   - Uncover
+Opcionals
+   - Nlights
