@@ -35,15 +35,8 @@ void main() {
     vec2 frameOffset = vec2(/*s*/frameX * frameWidth, 
     						/*t*/frameY * frameHeight);
     						
-    vec2 st = vtexCoord * vec2(frameWidth, frameHeight) + frameOffset;
 	
-
-
-    						
     vtexCoord = texCoord * vec2(frameWidth, frameHeight) + frameOffset;
 }
-
-
- 
 
 
