@@ -23,6 +23,5 @@ void main()
     vec3 NObjectSpace = normalize(vec3(-G.x, -G.y, smoothness));
     vec3 NEyeSpace = normalize(normalMatrix * NObjectSpace);
     fragColor = vec4(NEyeSpace.z);
-
 }
 
