@@ -3,18 +3,63 @@
 layout (location = 0) in vec3 vertex;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec3 color;
-layout (location = 3) in vec2 texCoord;
 
 out vec4 frontColor;
-out vec2 vtexCoord;
 
 uniform mat4 modelViewProjectionMatrix;
 uniform mat3 normalMatrix;
 
+uniform sampler2D positionMap;
+uniform sampler2D normalMap1;
+
+uniform int mode = 2;
+
+//Llum
+uniform vec4 lightAmbient;
+uniform vec4 lightDiffuse;
+uniform vec4 lightSpecular;
+uniform vec4 lightPosition; //eye space
+
+//material
+uniform vec4 matAmbient;
+uniform vec4 matDiffuse;
+uniform vec4 matSpecular;
+uniform float matShininess;
+
+//model -> eye space, P l'usa
+uniform mat4 modelViewMatrix; 
+
+vec4 Phong(vec3 N, vec3 V,vec3 L) {
+	vec3 R = normalize(2.0*dot(N,L)*N-L);
+	float NdotL = max (0.0, dot(N,L));
+	float RdotV = max (0.0, dot(R,V));
+	float Idiff = NdotL;
+	float Ispec = 0;
+	if (NdotL > 0 ) Ispec = pow(RdotV,matShininess);
+	
+	return matAmbient * lightAmbient + 
+	       matDiffuse * lightDiffuse * Idiff +
+	       matSpecular * lightSpecular * Ispec;	   
+}
+
 void main()
 {
-    vec3 N = normalize(normalMatrix * normal);
-    frontColor = vec4(color,1.0) * N.z;
-    vtexCoord = texCoord;
-    gl_Position = modelViewProjectionMatrix * vec4(vertex, 1.0);
+	//(x,y) = [-1,1] -> (s,t) = [0.004, 0.996] 
+	vec2 st =  vertex.xy * vec2((0.966 - 0.004)/2) + 0.5;
+
+   	vec4 P = texture(positionMap, st); //vertex en object space
+    vec4 NObjectSpace = texture(normalMap1, st);
+    vec4 NOS = (NObjectSpace - 0.5) * 2; // [0,1] -> [-1, 1]
+    
+    vec3 N = normalize(normalMatrix * NOS.xyz);
+    if (mode == 0) frontColor = P;
+    else if (mode == 1) frontColor = P * N.z;
+   	else if (mode == 2)  {
+   		vec3 N = normalize(NOS.xyz);
+   		vec3 P2 = normalize(P.xyz);
+   		vec3 L = normalize(lightPosition.xyz - P.xyz);
+   		frontColor = Phong(N,P2,L);
+   	}
+
+    gl_Position = modelViewProjectionMatrix * P;
 }
