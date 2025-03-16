@@ -29,7 +29,7 @@ uniform float matShininess;
 //model -> eye space, P l'usa
 uniform mat4 modelViewMatrix; 
 
-vec4 Phong(vec3 N, vec3 V,vec3 L) {
+vec4 Phong(vec3 N, vec3 V,vec3 L, vec4 P) {
 	vec3 R = normalize(2.0*dot(N,L)*N-L);
 	float NdotL = max (0.0, dot(N,L));
 	float RdotV = max (0.0, dot(R,V));
@@ -37,28 +37,29 @@ vec4 Phong(vec3 N, vec3 V,vec3 L) {
 	float Ispec = 0;
 	if (NdotL > 0 ) Ispec = pow(RdotV,matShininess);
 	
-	return matAmbient * lightAmbient + 
-	       matDiffuse * lightDiffuse * Idiff +
-	       matSpecular * lightSpecular * Ispec;	   
+	vec4 Llum =  matAmbient * lightAmbient + 
+	       		 matSpecular * lightSpecular * Ispec;	 
+	if (mode == 2) return Llum + matDiffuse * lightDiffuse * Idiff;
+	else return Llum + P * lightDiffuse * Idiff; 
 }
 
-void main()
+void main() //El test no funciona
 {
 	//(x,y) = [-1,1] -> (s,t) = [0.004, 0.996] 
 	vec2 st =  vertex.xy * vec2((0.966 - 0.004)/2) + 0.5;
-
-   	vec4 P = texture(positionMap, st); //vertex en object space
+	//Vertex en object space
+   	vec4 P = texture(positionMap, st); 
     vec4 NObjectSpace = texture(normalMap1, st);
     vec4 NOS = (NObjectSpace - 0.5) * 2; // [0,1] -> [-1, 1]
     
     vec3 N = normalize(normalMatrix * NOS.xyz);
     if (mode == 0) frontColor = P;
     else if (mode == 1) frontColor = P * N.z;
-   	else if (mode == 2)  {
-   		vec3 N = normalize(NOS.xyz);
-   		vec3 P2 = normalize(P.xyz);
-   		vec3 L = normalize(lightPosition.xyz - P.xyz);
-   		frontColor = Phong(N,P2,L);
+   	else if (mode == 2 || mode == 3)  {
+   		vec3 PL = (modelViewMatrix * vec4(vertex.xyz,1.0)).xyz;
+   		vec3 V = normalize(-PL);
+   		vec3 L = normalize(lightPosition.xyz - PL);
+   		frontColor = Phong(N,V,L,P);
    	}
 
     gl_Position = modelViewProjectionMatrix * P;
