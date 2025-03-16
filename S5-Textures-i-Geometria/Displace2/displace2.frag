@@ -11,13 +11,19 @@ uniform mat3 normalMatrix;
 
 void main()	
 {
-    float h = texture(heightMap, st).r;
-    float hx = texture(heightMap, st + vec2(epsilon, 0.0)).r;
-    float hy = texture(heightMap, st + vec2(0.0, epsilon)).r;
+    /* Càlcul del gradient (forward differences) (Tx és increment, epsilon) 
+  	 			
+  	 			f'(x) = (f(x + Tx) - f(x)) / Tx
+  	 	f = f(x)
+  	 	fx = f(x + epsilon)
+  	 	fy = f(y - epsilon)
 
-    // Càlcul del gradient (forward differences) (T representa increment) 
-  	// f'(x) = (f(x + Tx) - f(x)) / Tx
-    vec2 G = vec2((hx - h) / epsilon, (hy - h) / epsilon);
+  	*/
+    float f = texture(heightMap, st).r;
+    float fx = texture(heightMap, st + vec2(epsilon, 0.0)).r; //
+    float fy = texture(heightMap, st + vec2(0.0, epsilon)).r;
+
+    vec2 G = vec2((fx - f) / epsilon, (fy - f) / epsilon);
 
     
     vec3 NObjectSpace = normalize(vec3(-G.x, -G.y, smoothness));
