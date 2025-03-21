@@ -13,7 +13,7 @@ void main()
 {
     /* Càlcul del gradient (forward differences) (Tx és increment, epsilon) 
   	 			
-  	 			f'(x) = (f(x + Tx) - f(x)) / Tx
+  	 	f'(x) = (f(x + Tx) - f(x)) / Tx
   	 	f = f(x)
   	 	fx = f(x + epsilon)
   	 	fy = f(y - epsilon)
