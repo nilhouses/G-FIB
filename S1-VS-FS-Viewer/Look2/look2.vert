@@ -15,10 +15,7 @@ uniform float angle = 0.5;
 
 void main()
 {    
-    float t;    
-    if (vertex.y <= 1.45) t = 0;
-    else if (vertex.y >= 1.55) t = 1;
-    else t = smoothstep(1.45,1.55, vertex.y); //sempre retorna un valor entre 0 i 1
+    float t = smoothstep(1.45,1.55, vertex.y); //sempre retorna un valor entre 0 i 1
     
     float a = angle * t;
     mat4 rotationMatrix = mat4(cos(a), 0, -sin(a), 0,
