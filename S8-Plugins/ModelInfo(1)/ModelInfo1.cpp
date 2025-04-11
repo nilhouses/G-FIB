@@ -13,12 +13,30 @@ void ModelInfo1::preFrame()
 
 void ModelInfo1::postFrame()
 {
-	//número d'objectes carregats
-
-	//número total de polígons
-	//número total de vèrtexs
-	//percentatge de polígons que són triangles
-
+	Scene* scn = scene();
+	
+	int nObj = scn->objects().size();
+	int nVert = 0;
+	int nPolyg = 0;
+	int nTrianglPolyg = 0;
+	
+	const vector<Object> & objects = scn->objects();
+	for (const Object &obj : objects) {
+		nPolyg += obj.faces().size();
+		nVert += obj.vertices().size();
+		for (const Face &face : obj.faces()) {
+			if (face.numVertices() == 3) nTrianglPolyg++;
+		}
+	}
+	
+	float percentTrianglPolyg = (nPolyg > 0) ? (nTrianglPolyg * 100.0f / nPolyg) : 0.0f;
+	
+	cout << "Objectes carregats: " << nObj << endl;
+	cout << "Polígons totals carregats: " << nPolyg << endl;
+	cout << "Vèrtexs totals carregats: " << nVert << endl;
+	// cout << "Polígons: " << nPolyg << endl;
+	// cout << "Polígons que són triangles: " << nTrianglPolyg << endl;
+	cout << "Percentatge de polígons que son triangles: " << percentTrianglPolyg <<" %"<< endl;
 }
 
 void ModelInfo1::onObjectAdd()
@@ -50,4 +68,5 @@ void ModelInfo1::mouseMoveEvent(QMouseEvent *)
 {
 	
 }
+
 
