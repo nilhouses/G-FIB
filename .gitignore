@@ -1,2 +1,3 @@
-Viewer/
+Viewer/*
+!Viewer/plugins/
 *.png
