@@ -1,2 +1,2 @@
-TARGET     = $$qtLibraryTarget(showdegree51)
+TARGET     = $$qtLibraryTarget(showdegree1)
 include(../common.pro)
