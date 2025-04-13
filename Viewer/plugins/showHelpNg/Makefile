@@ -142,10 +142,6 @@ DIST          = /opt/Qt/5.15.1/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_openglextensions.pri \
 		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_openglextensions_private.pri \
 		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri \
-		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_pdf.pri \
-		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_pdf_private.pri \
-		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_pdfwidgets.pri \
-		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_pdfwidgets_private.pri \
 		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_platformcompositor_support_private.pri \
 		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_positioning.pri \
 		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri \
@@ -375,10 +371,6 @@ Makefile: showHelpNg.pro /opt/Qt/5.15.1/gcc_64/mkspecs/linux-g++/qmake.conf /opt
 		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_openglextensions.pri \
 		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_openglextensions_private.pri \
 		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri \
-		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_pdf.pri \
-		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_pdf_private.pri \
-		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_pdfwidgets.pri \
-		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_pdfwidgets_private.pri \
 		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_platformcompositor_support_private.pri \
 		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_positioning.pri \
 		/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri \
@@ -592,10 +584,6 @@ Makefile: showHelpNg.pro /opt/Qt/5.15.1/gcc_64/mkspecs/linux-g++/qmake.conf /opt
 /opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_openglextensions.pri:
 /opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_openglextensions_private.pri:
 /opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri:
-/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_pdf.pri:
-/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_pdf_private.pri:
-/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_pdfwidgets.pri:
-/opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_pdfwidgets_private.pri:
 /opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_platformcompositor_support_private.pri:
 /opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_positioning.pri:
 /opt/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri:
