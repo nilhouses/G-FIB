@@ -10,10 +10,16 @@ out vec2 st;
 uniform mat4 modelViewProjectionMatrix;
 uniform mat3 normalMatrix;
 
+uniform int mode;
+uniform float time;
+
 void main()
 {
-    //vec3 N = normalize(normalMatrix * normal);
-    //frontColor = vec4(color,1.0) * N.z;
     st = texCoord;
-    gl_Position = modelViewProjectionMatrix * vec4(vertex, 1.0);
+    if (mode > 2) {
+        float S = 0.5 + abs(sin(time*2))*0.2;
+        gl_Position = modelViewProjectionMatrix * vec4(vertex*S, 1.0);
+    } else 
+        gl_Position = modelViewProjectionMatrix * vec4(vertex, 1.0);
+    
 }
