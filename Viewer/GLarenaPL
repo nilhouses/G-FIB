@@ -18,7 +18,7 @@ function assign() {
 SYSTEM=$(uname)
 if [ $SYSTEM == "Linux" ]; then
     export VIMAGE=eog
-    export VEDITOR=gedit
+    export VEDITOR=code
     assign "VMODELS"   "$HOME/assig/grau-g/models"   "$T/models"
     assign "VTEXTURES" "$HOME/assig/grau-g/Textures" "$T/Textures"
     assign "VTESTS"    "$HOME/assig/grau-g/tests"    "$T/tests"
