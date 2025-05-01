@@ -37,6 +37,15 @@ private:
     QOpenGLShaderProgram* program;
     QOpenGLShader* vs;
     QOpenGLShader* fs;
+    // Bounding box
+    QOpenGLShader *vsBox, *fsBox;
+    QOpenGLShaderProgram *programBox;
+    GLuint VAO_box;
+    void configureBoxShaders();
+    void configureBox(GLWidget &g);
+    void drawBoundingBox(GLWidget &g, const Box &box);
+    void postFrame();
+
 public:
     void onPluginLoad();
     void mouseReleaseEvent(QMouseEvent*);
