@@ -58,9 +58,9 @@ void Multitex::onPluginLoad()
 
 	// Load Texture 1
 	QString filename = QFileDialog::getOpenFileName(0, "Open Image", "/assig/grau-g/Textures", "Image file (*.png *.jpg)");	
-	QImage img0(filename);	
+	QImage img0(filename);	//path que indica l'usuari
 	QImage im0 = img0.convertToFormat(QImage::Format_ARGB32).rgbSwapped().mirrored();
-        g.makeCurrent();
+        g.makeCurrent(); // Assegura el context OpenGL actual
 	g.glActiveTexture(GL_TEXTURE0);
 	g.glGenTextures( 1, &textureId0);
 	g.glBindTexture(GL_TEXTURE_2D, textureId0);
@@ -69,7 +69,7 @@ void Multitex::onPluginLoad()
 	g.glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 	g.glBindTexture(GL_TEXTURE_2D, 0);
 
-	// Load Texture 2
+	// Load Texture 2 (el mateix que amb la textura anterior)
 	QString filename2 = QFileDialog::getOpenFileName(0, "Open Image 2", "/assig/grau-g/Textures", "Image file (*.png *.jpg)");	
 	QImage img1(filename2);	
 	QImage im1 = img1.convertToFormat(QImage::Format_ARGB32).rgbSwapped().mirrored();
@@ -88,13 +88,15 @@ void Multitex::preFrame()
     GLWidget &g = *glwidget();
     g.makeCurrent();
 
-    // bind shader and define uniforms
+    //L'ordre es podria invertir, és el mateix
+    
+    //1) bind shader and define uniforms
     program->bind();
     program->setUniformValue("sampler0", 0);  // texture unit del primer sampler 
     program->setUniformValue("sampler1", 1);  // texture unit del segon  sampler 
     program->setUniformValue("radius", float(scene()->boundingBox().radius()));  // radi d'una esfera que engloba l'escena
     program->setUniformValue("modelViewProjectionMatrix", g.camera()->projectionMatrix() * g.camera()->viewMatrix());
-    // bind textures
+    //2) bind textures
     g.glActiveTexture(GL_TEXTURE0);
     g.glBindTexture(GL_TEXTURE_2D, textureId0);
     g.glActiveTexture(GL_TEXTURE1);
