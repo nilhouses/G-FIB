@@ -1,4 +1,2 @@
-TARGET     = $$qtLibraryTarget(glowing)  # Nom del plugin 
-
+TARGET     = $$qtLibraryTarget(glowing17)
 include(../common.pro)
-
