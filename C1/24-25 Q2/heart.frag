@@ -31,17 +31,23 @@ float aastep(float threshold, float x) {
     return smoothstep(threshold - width, threshold + width, x);
 }
 
+
+
 void mode0() {
     if (insideCircle(C1, r1)) {
         fragColor = R;
     } else if (insideCircle(C2, r1)) {
         fragColor = R;
+    } else if(distance(vec2(0.5,0.13), st) < 0.45 && acos(distance(vec2(0.5, st.y), st)/distance(vec2(0.5,0.13),st)) > PI/4 && st.y > 0.13) fragColor = R;
+        /*
     } else if (insideCircle(C3, r2)) { 
         float s = atan(C3.y, C3.x) + PI / 5.9; //dreta
         float e = atan(0.0, -r2) - PI/4.0; //esquerra
         if (withinAngleRange(C3,s,e)) fragColor = R;
         else fragColor = W;
-    } else fragColor = W;
+    }
+        */
+    else fragColor = W;
 }
 
 void mode1() {
