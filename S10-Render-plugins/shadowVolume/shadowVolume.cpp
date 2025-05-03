@@ -1,6 +1,11 @@
 #include "shadowVolume.h"
 #include "glwidget.h"
 
+/*
+* S -> Activació del volum d'ombra
+* C -> Canvi de la posició de la llum
+*/
+
 void ShadowVolume::onPluginLoad()
 {
    GLWidget &g = *glwidget();
@@ -64,6 +69,22 @@ void ShadowVolume::onObjectAdd()
    sendShadowVolume(a, b, c, light);
 }
 
+/**
+ * @brief Renderitza l'escena utilitzant tècniques de Shadow Volume per generar ombres.
+ * 
+ * - Si `showVolume` és cert:
+ *   1. Es dibuixa l'escena completa, incloent l'oclusor, el terra, el volum d'ombra i altres objectes.
+ * 
+ * - Si `showVolume` és fals:
+ *   1. Es dibuixa l'escena al z-buffer amb la màscara de color desactivada.
+ *   2. Es dibuixen les cares frontals del volum d'ombra al buffer d'stencil incrementant el valor.
+ *   3. Es dibuixen les cares posteriors del volum d'ombra al buffer d'stencil decrementant el valor.
+ *   4. Es dibuixa la part fosca de l'escena utilitzant el buffer d'stencil per delimitar les zones d'ombra.
+ *   5. Es dibuixa la part il·luminada de l'escena utilitzant el buffer d'stencil per delimitar les zones de llum.
+ *   6. Es restauren els valors inicials de configuració d'OpenGL.
+ * 
+ * @return true Sempre retorna cert per indicar que el procés de renderització s'ha completat.
+ */
 bool ShadowVolume::paintGL()
 {
    GLWidget & g = *glwidget();
@@ -128,7 +149,20 @@ bool ShadowVolume::paintGL()
       g.glDrawArrays(GL_TRIANGLES, 0, 24);
    
       // Step 4. Draw dark area of the scene
-	  // completeu el codi per configurar correctament l'estat d'OpenGL (Depth & Color Masks, Depth function, Config. Stencil, face culling)
+	  // Configurar l'estat d'OpenGL (Depth & Color Masks, Depth function, Config. Stencil, face culling)
+	  // Configurar les màscares de color i profunditat
+	  g.glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE); // Activar l'escriptura al color buffer
+	  g.glDepthMask(GL_TRUE); // Activar l'escriptura al depth buffer
+
+	  // Configurar la funció de profunditat
+	  g.glDepthFunc(GL_LEQUAL); // Acceptar fragments amb profunditat menor o igual
+
+	  // Configurar la funció de stencil
+	  g.glStencilFunc(GL_NOTEQUAL, 0, 0xFF); // Passen els fragments amb valor diferent de 0
+	  g.glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP); // Valors del buffer d'stencil sense canvis
+
+	  // Configurar el culling de cares
+	  g.glCullFace(GL_BACK); // Back-face-culling, descartar les cares posteriors
 
       program->setUniformValue("dark", float(0.2));
    
@@ -144,8 +178,11 @@ bool ShadowVolume::paintGL()
       if (drawPlugin()) drawPlugin()->drawScene();
 
       // Step 5. Draw light area of the scene
-	  // completeu el codi per configurar correctament la funció de stencil
-		
+
+	  // Configurar la funció de stencil
+	  g.glStencilFunc(GL_EQUAL, 0, 0xFF); // Passen els fragments amb valor = 0 
+	  g.glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);// Valors del buffer d'stencil sense canvis
+	  g.glCullFace(GL_BACK); // Back-face-culling, descartar les cares posteriors
 
       program->setUniformValue("dark", float(1.0));
    
@@ -223,34 +260,35 @@ void ShadowVolume::loadProgram()
 
 void ShadowVolume::sendTriangle(QVector3D a, QVector3D b, QVector3D c)
 {
-   GLWidget &g = *glwidget();
-   float coord[] = {a.x(), a.y(), a.z(),
-                    b.x(), b.y(), b.z(),
-                    c.x(), c.y(), c.z()};
-   float color[] = {1.0, 1.0, 0.0,
-                    1.0, 1.0, 0.0,
-                    1.0, 1.0, 0.0};
-                    
-   g.glDeleteBuffers (1, &VBOTriangleCoords);
-   g.glDeleteBuffers (1, &VBOTriangleColors);
-   g.glDeleteVertexArrays (1, &VAOTriangle);
-                    
-   g.glGenVertexArrays (1,&VAOTriangle);
-   
-   g.glGenBuffers(1, &VBOTriangleCoords);
-   g.glBindVertexArray (VAOTriangle);
-   g.glBindBuffer (GL_ARRAY_BUFFER, VBOTriangleCoords);
-   g.glBufferData (GL_ARRAY_BUFFER, sizeof(coord), &coord[0], GL_STATIC_DRAW);
-   g.glVertexAttribPointer (0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-   g.glEnableVertexAttribArray (0);
-   
-   g.glGenBuffers(1, &VBOTriangleColors);   
-   g.glBindBuffer (GL_ARRAY_BUFFER, VBOTriangleColors);
-   g.glBufferData (GL_ARRAY_BUFFER, sizeof(color), &color[0], GL_STATIC_DRAW);
-   g.glVertexAttribPointer (1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-   g.glEnableVertexAttribArray (1);
-   
-   g.glBindVertexArray (0);
+	GLWidget &g = *glwidget();
+	float coord[] = {a.x(), a.y(), a.z(),
+					c.x(), c.y(), c.z(), // Canvio el sentit de la cara que es veu per veure el triangle des de sobre i no des de sota
+					b.x(), b.y(), b.z()};
+					
+	float color[] = {1.0, 1.0, 0.0,
+					1.0, 1.0, 0.0,
+					1.0, 1.0, 0.0};
+						  
+	g.glDeleteBuffers (1, &VBOTriangleCoords);
+	g.glDeleteBuffers (1, &VBOTriangleColors);
+	g.glDeleteVertexArrays (1, &VAOTriangle);
+						  
+	g.glGenVertexArrays (1,&VAOTriangle);
+	
+	g.glGenBuffers(1, &VBOTriangleCoords);
+	g.glBindVertexArray (VAOTriangle);
+	g.glBindBuffer (GL_ARRAY_BUFFER, VBOTriangleCoords);
+	g.glBufferData (GL_ARRAY_BUFFER, sizeof(coord), &coord[0], GL_STATIC_DRAW);
+	g.glVertexAttribPointer (0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	g.glEnableVertexAttribArray (0);
+	
+	g.glGenBuffers(1, &VBOTriangleColors);   
+	g.glBindBuffer (GL_ARRAY_BUFFER, VBOTriangleColors);
+	g.glBufferData (GL_ARRAY_BUFFER, sizeof(color), &color[0], GL_STATIC_DRAW);
+	g.glVertexAttribPointer (1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	g.glEnableVertexAttribArray (1);
+	
+	g.glBindVertexArray (0);
 }
 
 void ShadowVolume::sendFloor()
