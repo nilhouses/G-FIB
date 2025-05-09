@@ -5,8 +5,8 @@ void AnimateVerticesPlugin::onPluginLoad()
 { 
 	/*Compila i linka*/
 
-	GLWidget* g = glwidget();
-	g->makeCurrent();
+	GLWidget &g = *glwidget();
+	g.makeCurrent();
 	// 1) Compilar
 
 	//VS
