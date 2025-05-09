@@ -1,2 +1,2 @@
-TARGET     = $$qtLibraryTarget(depthnormal14)
+TARGET     = $$qtLibraryTarget(depthnormal1)
 include(../common.pro)

@@ -117,7 +117,7 @@ bool Depthnormal::drawScene() {
 }
 
 
-bool Depthnormal::drawObject(int objId) {
+bool Depthnormal::drawObject(int) {
 	return false;
 }
 
