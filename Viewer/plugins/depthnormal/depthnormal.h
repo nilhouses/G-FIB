@@ -27,8 +27,6 @@ class Depthnormal: public QObject, public Plugin
 	QOpenGLShaderProgram *program1, *program2;
     QOpenGLShader *vs1, *vs2;
     QOpenGLShader *fs1, *fs2; 
-	//Per saber quin pintar
-	QString activeProgram;
 
 };
 
