@@ -1,9 +1,8 @@
 #include "depthnormal.h"
 #include "glwidget.h"
 
-void Depthnormal::onPluginLoad()
+void Depthnormal::onPluginLoad() // Configure shaders
 {
-// Configure shaders
     GLWidget &g = *glwidget();
     g.makeCurrent();
 
@@ -46,89 +45,82 @@ void Depthnormal::onPluginLoad()
     if (!ok) {cout << "Error linking program2" << endl; return;}
 }
 
-void Depthnormal::preFrame()
-{
-	cout << "preFrame called with activeProgram: " << activeProgram << endl;
-    if (activeProgram == "DEPTH") {
-        program1->bind();
-        QMatrix4x4 MVP = camera()->projectionMatrix() * camera()->viewMatrix();
-        program1->setUniformValue("modelViewProjectionMatrix", MVP);
-	}
-    else if (activeProgram == "NORMAL") {
-        program2->bind();
-        QMatrix3x3 NM = camera()->viewMatrix().normalMatrix();
-        QMatrix4x4 MVP = camera()->projectionMatrix() * camera()->viewMatrix();
-        program2->setUniformValue("modelViewProjectionMatrix", MVP);
-        program2->setUniformValue("normalMatrix", NM);
-    }
-	else{
-		cout << "Error: Unknown active program" << endl;
-	}
-}
-
-
-void Depthnormal::postFrame()
-{
-    if (activeProgram == "DEPTH")
-        program1->release();
-    else if (activeProgram == "NORMAL")
-        program2->release();
-}
 
 bool Depthnormal::paintGL()
 {
 	GLWidget &g = *glwidget();
 	g.makeCurrent();
-
+	
 	int w = g.width();
 	int h = g.height();
-
+	
 	// Clear the screen with a black background
 	g.glClearColor(0.0, 0.0, 0.0, 1.0);
 	g.glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
-	// PASS 1: Render Depth
-	activeProgram = "DEPTH";
+	
+	// PASS 1:  Depth
+	//cout << "Pinto depth" << endl;
+	program1->bind();
+	// Viewport esquerre
 	glViewport(0, 0, w / 2, h); // Left half of the screen
 	camera()->setAspectRatio(float(w) / 2.0f / float(h));
-	program1->bind(); // Bind the depth shader program
+	
+	// Uniforms
 	QMatrix4x4 MVP = camera()->projectionMatrix() * camera()->viewMatrix();
 	program1->setUniformValue("modelViewProjectionMatrix", MVP);
-	drawPlugin(); // Render the scene
-	program1->release(); // Release the shader program
 
+	// Dibuixa l'escena
+	if (drawPlugin()) drawPlugin() -> drawScene();
+	// Desactiva el shader
+	program1->release(); 
+	
 	// PASS 2: Render Normals
-	activeProgram = "NORMAL";
+	//cout << "Pinto normal" << endl;
+	program2->bind();
+	// Viewport dret
 	glViewport(w / 2, 0, w / 2, h); // Right half of the screen
 	camera()->setAspectRatio(float(w) / 2.0f / float(h));
-	program2->bind(); // Bind the normal shader program
+
+	// Uniforms
 	QMatrix3x3 NM = camera()->viewMatrix().normalMatrix();
 	MVP = camera()->projectionMatrix() * camera()->viewMatrix();
 	program2->setUniformValue("modelViewProjectionMatrix", MVP);
 	program2->setUniformValue("normalMatrix", NM);
-	drawPlugin(); // Render the scene
-	program2->release(); // Release the shader program
 
-	// Bind the default program to reset the state
-	g.defaultProgram()->bind();
+	// Dibuixa l'escena
+	if (drawPlugin()) drawPlugin() -> drawScene();
+	// Desactiva el shader
+	program2->release();
+
+	// Fi
 	return true;
 }
 
 
+void Depthnormal::preFrame()
+{
 
-bool Depthnormal::drawScene() {
-    return false; // return true only if implemented
 }
 
 
-bool Depthnormal::drawObject(int) {
-	return false; // return true only if implemented
-}
+void Depthnormal::postFrame()
+{
 
+}
 void Depthnormal::onObjectAdd()
 {
 	
 }
+
+bool Depthnormal::drawScene() {
+	return false;
+}
+
+
+bool Depthnormal::drawObject(int objId) {
+	return false;
+}
+
 
 
 void Depthnormal::keyPressEvent(QKeyEvent *)
