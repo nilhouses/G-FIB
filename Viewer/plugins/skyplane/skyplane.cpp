@@ -34,11 +34,11 @@ void Skyplane::onPluginLoad()
 
     // Crear VAO + VBO
     float vertices[] = {
-        -1.0f, -1.0f, 1.0f, 0.0f, 0.0f,
-         1.0f, -1.0f, 1.0f, 1.0f, 0.0f,
-        -1.0f,  1.0f, 1.0f, 0.0f, 1.0f,
-         1.0f,  1.0f, 1.0f, 1.0f, 1.0f
-    };
+        -1.0f, -1.0f, 1.0f,  0.0f, 0.0f,
+         1.0f, -1.0f, 1.0f,  1.0f, 0.0f,
+        -1.0f,  1.0f, 1.0f,  0.0f, 1.0f,
+         1.0f,  1.0f, 1.0f,  1.0f, 1.0f
+    };    
 
     g.glGenVertexArrays(1, &VAO);
     g.glBindVertexArray(VAO);
@@ -86,17 +86,11 @@ bool Skyplane::paintGL()
     mirrorProgram->bind();
 	skyTexture->bind(0);// Activa la textura 0
 
-    // QMatrix4x4 model;
-    // model.scale(1.0f, -1.0f, 1.0f); // Reflexió vertical (eix Y)
-    // QMatrix4x4 MVP_reflected = g.camera()->projectionMatrix() * g.camera()->viewMatrix() * model;
-    // mirrorProgram->setUniformValue("modelViewProjectionMatrix", MVP_reflected);
 	mirrorProgram->setUniformValue("sampler0", 0);
 	mirrorProgram->setUniformValue("modelViewProjectionMatrix", MVP);
 	mirrorProgram->setUniformValue("modelViewMatrix", MVM);
 
     if (drawPlugin()) drawPlugin()->drawScene();
-
-	//g.drawScene(); // pinta l’escena amb el shader actiu
 
     mirrorProgram->release();
 
