@@ -22,7 +22,6 @@ void Skyplane::onPluginLoad()
 	mirrorProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, g.getPluginPath() + "/../skyplane/mirror.frag");
 	mirrorProgram->link();
 
-
 	g.glActiveTexture(GL_TEXTURE0);
     // Imatge + textura
     QImage img(g.getPluginPath() + "/../skyplane/sky.jpg");
@@ -32,26 +31,25 @@ void Skyplane::onPluginLoad()
     skyTexture->setWrapMode(QOpenGLTexture::Repeat);
     skyTexture->generateMipMaps();
 
-    // Crear VAO + VBO
-    float vertices[] = {
-        -1.0f, -1.0f, 1.0f, 0.0f, 0.0f,
-         1.0f, -1.0f, 1.0f, 1.0f, 0.0f,
-        -1.0f,  1.0f, 1.0f, 0.0f, 1.0f,
-         1.0f,  1.0f, 1.0f, 1.0f, 1.0f
-    };
-
+    // Crear VAO + VBO 
     g.glGenVertexArrays(1, &VAO);
     g.glBindVertexArray(VAO);
-
+    
+    float vertices[] = {
+        -1.0f, -1.0f, 1.0f,
+         1.0f, -1.0f, 1.0f,
+        -1.0f,  1.0f, 1.0f,
+         1.0f,  1.0f, 1.0f
+    };    
+    
     g.glGenBuffers(1, &VBO);
     g.glBindBuffer(GL_ARRAY_BUFFER, VBO);
     g.glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
+    
     g.glEnableVertexAttribArray(0); // posició
-    g.glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-    g.glEnableVertexAttribArray(1); // coordenades de textura
-    g.glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-
+    g.glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    // No hi ha atribut de coordenades de textura!
+    
     g.glBindVertexArray(0);
 }
 
@@ -75,9 +73,11 @@ bool Skyplane::paintGL()
 	skyProgram->setUniformValue("modelViewMatrix", MVM);
 
 	// Pinta el rectangle
+    g.glDisable(GL_DEPTH_TEST);//Que no el tapi l'escena
 	g.glBindVertexArray(VAO);
     g.glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	g.glBindVertexArray(0);
+    g.glEnable(GL_DEPTH_TEST);
 
     skyTexture->release();
     skyProgram->release();
@@ -86,17 +86,11 @@ bool Skyplane::paintGL()
     mirrorProgram->bind();
 	skyTexture->bind(0);// Activa la textura 0
 
-    // QMatrix4x4 model;
-    // model.scale(1.0f, -1.0f, 1.0f); // Reflexió vertical (eix Y)
-    // QMatrix4x4 MVP_reflected = g.camera()->projectionMatrix() * g.camera()->viewMatrix() * model;
-    // mirrorProgram->setUniformValue("modelViewProjectionMatrix", MVP_reflected);
 	mirrorProgram->setUniformValue("sampler0", 0);
 	mirrorProgram->setUniformValue("modelViewProjectionMatrix", MVP);
 	mirrorProgram->setUniformValue("modelViewMatrix", MVM);
 
     if (drawPlugin()) drawPlugin()->drawScene();
-
-	//g.drawScene(); // pinta l’escena amb el shader actiu
 
     mirrorProgram->release();
 

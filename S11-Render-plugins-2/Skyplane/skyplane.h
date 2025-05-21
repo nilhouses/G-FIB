@@ -33,7 +33,6 @@ class Skyplane: public QObject, public Plugin
 	QOpenGLShader *vsSky, *fsSky, *vsMirror, *fsMirror;
 	GLuint VAO, VBO, textureId;
 	QOpenGLTexture* skyTexture;
-	void drawReflection(GLWidget &g);
 };
 
 #endif
