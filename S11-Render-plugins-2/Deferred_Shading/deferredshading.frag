@@ -45,6 +45,10 @@ void main()
     vec3 lightPosition = cameraPosition;
 
     // TODO: compute ilumination with the Phong model
-    fragColor = vec4(0.0);
+    vec3 N = normalize(normal);
+    vec3 V = normalize(cameraPosition - fragmentPosition);
+    vec3 L = normalize(lightPosition - fragmentPosition);
+    float shininess = 32.0 * specular;
+    fragColor = phong(N, V, L, color, shininess);
 }
 

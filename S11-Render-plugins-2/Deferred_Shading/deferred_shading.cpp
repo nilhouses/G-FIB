@@ -146,6 +146,9 @@ bool Deferred_shading::paintGL()
         if (drawPlugin()) drawPlugin()->drawScene();
 
         // TODO: Copy from the color buffer to the corresponding texture
+        g.glBindTexture(GL_TEXTURE_2D, colorAndSpecularMapId);
+        g.glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+        g.glBindTexture(GL_TEXTURE_2D, 0);
     }
 
     // Pass 2. Draw the scene and store normal information
@@ -159,6 +162,9 @@ bool Deferred_shading::paintGL()
         if (drawPlugin()) drawPlugin()->drawScene();
 
         // TODO: Copy from the color buffer to the corresponding texture
+        g.glBindTexture(GL_TEXTURE_2D, normalMapId);
+        g.glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+        g.glBindTexture(GL_TEXTURE_2D, 0);
     }
 
     // Pass 3. Draw the scene and store positional information
@@ -174,6 +180,9 @@ bool Deferred_shading::paintGL()
         if (drawPlugin()) drawPlugin()->drawScene();
 
         // TODO: Copy from the color buffer to the corresponding texture
+        g.glBindTexture(GL_TEXTURE_2D, positionMapId);
+        g.glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+        g.glBindTexture(GL_TEXTURE_2D, 0);
     }
 
     // Pass 4. Deferred shading
@@ -181,6 +190,13 @@ bool Deferred_shading::paintGL()
     {
         // Activate G-Buffer
         // TODO: activate the necessary textures
+        g.glActiveTexture(GL_TEXTURE0);
+        g.glBindTexture(GL_TEXTURE_2D, colorAndSpecularMapId);
+        g.glActiveTexture(GL_TEXTURE1);
+        g.glBindTexture(GL_TEXTURE_2D, normalMapId);
+        g.glActiveTexture(GL_TEXTURE2);
+        g.glBindTexture(GL_TEXTURE_2D, positionMapId);
+
 
         g.glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
