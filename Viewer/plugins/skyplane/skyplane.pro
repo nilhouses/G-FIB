@@ -1,2 +1,2 @@
-TARGET     = $$qtLibraryTarget(skyplane3)
+TARGET     = $$qtLibraryTarget(skyplane1)
 include(../common.pro)
