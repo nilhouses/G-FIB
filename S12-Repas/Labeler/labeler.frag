@@ -13,13 +13,13 @@ void main()
     if (gfrontColor == WHITE) //Label
     {   
         //Textura procedural
-        if (gTexCoord.x < 0.5 && gTexCoord.y < 0.5) //Top left
-            fragColor = YELLOW;
-        else if (gTexCoord.x > 0.5 && gTexCoord.y < 0.5) //Top right
+        if (gTexCoord.x > 2 && gTexCoord.x < 3 && gTexCoord.y > 1 && gTexCoord.y < 6)
             fragColor = BLACK;
-        else if (gTexCoord.x < 0.5 && gTexCoord.y > 0.5) //Bottom left
+        else if (gTexCoord.x > 3 && gTexCoord.x < 4 && gTexCoord.y > 3 && gTexCoord.y < 4)
             fragColor = BLACK;
-        else if (gTexCoord.x > 0.5 && gTexCoord.y > 0.5) //Bottom right
+        else if (gTexCoord.x > 3 && gTexCoord.x < 5 && gTexCoord.y > 5 && gTexCoord.y < 6)
+            fragColor = BLACK;
+        else
             fragColor = YELLOW;
     }
     else //The rest of the image
