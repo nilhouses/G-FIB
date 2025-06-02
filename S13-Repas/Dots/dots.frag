@@ -14,8 +14,6 @@ uniform bool opaque = true;                                                     
 out vec4 fragColor;
 
 const vec4 WHITE = vec4(1.0);
-const vec4 YELLOW = vec4(1.0, 1.0, 0.0, 1.0);
-const vec4 BLACK = vec4(0.0, 0.0, 0.0, 1.0);
 
 void main()
 {
