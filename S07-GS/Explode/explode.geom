@@ -4,7 +4,7 @@ layout(triangles) in;
 layout(triangle_strip, max_vertices = 36) out;
 
 in vec3 N[];
-const float speed = 0.5; //enunciat 1.2, racó  0.5
+const float speed = 0.5; //Al racó han demanat 0.5
 uniform float time;
 
 in vec4 vfrontColor[];

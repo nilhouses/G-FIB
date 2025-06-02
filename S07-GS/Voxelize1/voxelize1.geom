@@ -7,7 +7,7 @@ in vec4 vfrontColor[];
 out vec4 gfrontColor;
 
 uniform mat4 modelViewProjectionMatrix;
-uniform float step = 0.1;
+uniform float step = 0.2;
 
 
 vec3 baricentre(vec3 v1, vec3 v2, vec3 v3) {
@@ -52,16 +52,23 @@ void printCube(vec3 C, float side) {
 			EmitVertex();
 			if(j == 2 || j == 5) EndPrimitive(); //Pinto els dos triangles
 		}
+		EndPrimitive();
 	}
 }
 
 void main( void )
 {
 	// Centre real
-	vec3 C = baricentre( gl_in[0].gl_Position.xyz, gl_in[1].gl_Position.xyz, gl_in[2].gl_Position.xyz );
+	//vec3 C = baricentre( gl_in[0].gl_Position.xyz, gl_in[1].gl_Position.xyz, gl_in[2].gl_Position.xyz );
 	// Centre ja aproximat
-	C = step * floor(C / step + 0.5); //el 0.5 es per evitar arrodonir cap avall sempre
-	float side = step;
-	printCube(C, side);
+	//C = step * floor(C / step + 0.5); //el 0.5 es per evitar arrodonir cap avall sempre
+	
+	vec3 v0 = gl_in[0].gl_Position.xyz;
+	vec3 v1 = gl_in[1].gl_Position.xyz;
+	vec3 v2 = gl_in[2].gl_Position.xyz;
+
+	vec3 centreExacte = (v0 + v1 + v2) / 3.0;
+	vec3 centreCuadricula = round(centreExacte / step) * step;
+	printCube(centreCuadricula, step);
 	
 }
