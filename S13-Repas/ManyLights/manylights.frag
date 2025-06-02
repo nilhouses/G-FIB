@@ -21,7 +21,7 @@ uniform float matShininess;
 
 
 vec4 Phong(vec3 N, vec3 V,vec3 L) {
-	vec3 R = normalize(2.0*dot(N,L)*N-L);
+	vec3 R = normalize(2.0*dot(N,L)*N-L); // normalize(reflect(-L, N));
 	float NdotL = max (0.0, dot(N,L));
 	float RdotV = max (0.0, dot(R,V));
 	float Idiff = NdotL;
@@ -48,7 +48,7 @@ void main() {
     vec3 NEye = normalize(N);
     vec3 VEye = normalize(-P); // vector cap a l'observador
 
-    vec4 color = vec4(0.0);
+    vec4 llum = vec4(vec3(0.0),1.0);
     // X
     for (int i = 0; i < n; ++i) { 
         float tx = float(i) / float(NUM);
@@ -68,11 +68,10 @@ void main() {
                 vec3 L = normalize(lightPosEye - P);
                 float d = length(lightPosEye - P);
 
-                vec4 llum = Phong(NEye, VEye, L) * exp(-decay * d);
-                color += llum;
+                llum += Phong(NEye, VEye, L) * exp(-decay * d);
             }
         }
     }
-
-    fragColor = color;
+    //Multiplico pel color del VS
+    fragColor = vec4(frontColor + llum);
 }

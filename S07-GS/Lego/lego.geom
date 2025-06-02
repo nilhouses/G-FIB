@@ -19,23 +19,23 @@ vec3 baricentre(vec3 v1, vec3 v2, vec3 v3) {
 void printCube(vec3 C, float side) {
 
 	vec3 v[8];
-	v[0] = C + vec3(-side, -side, -side);
-	v[1] = C + vec3( side, -side, -side);
-	v[2] = C + vec3( side,  side, -side);
-	v[3] = C + vec3(-side,  side, -side);
-	v[4] = C + vec3(-side, -side,  side);
-	v[5] = C + vec3( side, -side,  side);
-	v[6] = C + vec3( side,  side,  side);
-	v[7] = C + vec3(-side,  side,  side);
+	v[0] = C + vec3(-side/2.0, -side/2.0, -side/2.0);
+	v[1] = C + vec3( side/2.0, -side/2.0, -side/2.0);
+	v[2] = C + vec3( side/2.0,  side/2.0, -side/2.0);
+	v[3] = C + vec3(-side/2.0,  side/2.0, -side/2.0);
+	v[4] = C + vec3(-side/2.0, -side/2.0,  side/2.0);
+	v[5] = C + vec3( side/2.0, -side/2.0,  side/2.0);
+	v[6] = C + vec3( side/2.0,  side/2.0,  side/2.0);
+	v[7] = C + vec3(-side/2.0,  side/2.0,  side/2.0);
 
 	// Escullo el vèrtex corresponent, vull evitar hardcodejar-ho...
 	int faces[36] = int[36](
-		0, 1, 2, 0, 2, 3, // -Z 
-		4, 5, 6, 4, 6, 7, // +Z 
-		0, 4, 7, 0, 7, 3, // -X 
-		1, 5, 6, 1, 6, 2, // +X 
-		0, 1, 5, 0, 5, 4, // -Y 
-		3, 2, 6, 3, 6, 7  // +Y 
+		2, 1, 0, 3, 2, 0, // -Z
+		4, 5, 6, 4, 6, 7, // +Z
+		7, 4, 0, 3, 7, 0, // -X
+		1, 5, 6, 2, 1, 6, // +X
+		4, 5, 1, 0, 4, 1, // -Y
+		6, 3, 7, 6, 2, 3  // +Y
 	);
 
 	for (int i = 0; i < 6; i++) { // Cara
@@ -46,10 +46,10 @@ void printCube(vec3 C, float side) {
 			vtexCoord = vec2(-1.0, -1.0);
 
 			if (i == 5) { // Cara + Y
-				if (j == 0) vtexCoord = vec2(0.0, 0.0);
+				if (j == 0) vtexCoord = vec2(1.0, 0.0);
 				else if (j == 1) vtexCoord = vec2(0.0, 1.0);
-				else if (j == 2) vtexCoord = vec2(1.0, 1.0);
-				else if (j == 3) vtexCoord = vec2(0.0, 0.0);
+				else if (j == 2) vtexCoord = vec2(0.0, 0.0);
+				else if (j == 3) vtexCoord = vec2(1.0, 0.0);
 				else if (j == 4) vtexCoord = vec2(1.0, 1.0);
 				else if (j == 5) vtexCoord = vec2(0.0, 1.0);
 			}

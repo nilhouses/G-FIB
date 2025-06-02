@@ -15,6 +15,7 @@ out vec3 P;
 
 void main() { //passa N i P al FS
     N = normalize(normalMatrix * normal);
+    frontColor = vec4(vec3(0.5,0.0,0.5), 1.0);//Lila per provar
     P = (modelViewMatrix * vec4(vertex.xyz,1.0)).xyz;
     gl_Position = modelViewProjectionMatrix * vec4(vertex, 1.0);
 }

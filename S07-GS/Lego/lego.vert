@@ -7,8 +7,11 @@ layout (location = 3) in vec2 texCoord;
 
 out vec4 vfrontColor;
 
+uniform mat3 normalMatrix;
+
 void main()
 {
-    vfrontColor = vec4(color,1.0);
+    vec3 N = normalize(normalMatrix * normal);
+    vfrontColor = vec4(color * N.z,1.0);
     gl_Position = vec4(vertex, 1.0);
 }
