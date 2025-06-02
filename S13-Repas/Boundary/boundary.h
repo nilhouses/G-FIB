@@ -1,9 +1,9 @@
-#ifndef _EULER_H
-#define _EULER_H
+#ifndef _BOUNDARY_H
+#define _BOUNDARY_H
 
 #include "plugin.h" 
 
-class Euler: public QObject, public Plugin
+class Boundary: public QObject, public Plugin
 {
 	Q_OBJECT
 	Q_PLUGIN_METADATA(IID "Plugin") 
