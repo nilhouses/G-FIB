@@ -4,14 +4,35 @@ layout(triangles) in;
 layout(triangle_strip, max_vertices = 36) out;
 
 in vec4 vfrontColor[];
-out vec4 cubeColor;
 
 out vec2 vtexCoord;
+out vec4 gfrontColor;
 
 uniform mat4 modelViewProjectionMatrix;
 uniform float step = 0.2;
 
-vec3 baricentre(vec3 v1, vec3 v2, vec3 v3) {
+const vec4 R = vec4(1.0, 0.0, 0.0, 1.0);
+const vec4 G = vec4(0.0, 1.0, 0.0, 1.0);
+const vec4 B = vec4(0.0, 0.0, 1.0, 1.0);
+const vec4 C = vec4(0.0, 1.0, 1.0, 1.0);
+const vec4 Y = vec4(1.0, 1.0, 0.0, 1.0);
+
+vec4 nearestColor(vec4 color) {
+    float dR = distance(color, R);
+    float dG = distance(color, G);
+    float dB = distance(color, B);
+    float dC = distance(color, C);
+    float dY = distance(color, Y);
+    float minDist = min(min(min(dR, dG), min(dB, dC)), dY);
+
+    if (minDist == dR) return R;
+    if (minDist == dG) return G;
+    if (minDist == dB) return B;
+    if (minDist == dC) return C;
+    return Y;
+}
+
+vec3 centre(vec3 v1, vec3 v2, vec3 v3) {
 	return (v1 + v2 + v3) / 3.0;
 }
 
@@ -27,6 +48,7 @@ void printCube(vec3 C, float side) {
 	v[6] = C + vec3( side/2.0,  side/2.0,  side/2.0);
 	v[7] = C + vec3(-side/2.0,  side/2.0,  side/2.0);
 
+	
 	//			3_________2
     //		   /         /|
 	//        /         / |
@@ -41,7 +63,7 @@ void printCube(vec3 C, float side) {
 		2, 1, 0, 3, 2, 0, // -Z
 		7, 4, 5, 6, 7, 5, // +Z
 		3, 0, 4, 7, 3, 4, // -X
-		5, 6, 1, 2, 6, 1, // +X
+		6, 5, 1, 2, 6, 1, // +X
 		1, 5, 4, 0, 1, 4, // -Y
 		3, 7, 6, 2, 3, 6  // +Y
 	);
@@ -61,7 +83,7 @@ void printCube(vec3 C, float side) {
 				else if (j == 4) vtexCoord = vec2(1.0, 0.0);
 				else if (j == 5) vtexCoord = vec2(0.0, 1.0);
 			}
-
+			gfrontColor = nearestColor(vec4(centre(vfrontColor[0].xyz, vfrontColor[1].xyz, vfrontColor[2].xyz), 1.0));
 			EmitVertex();
 			if (j == 2 || j == 5) EndPrimitive(); // Pinto els dos triangles
 		}
@@ -70,10 +92,8 @@ void printCube(vec3 C, float side) {
 
 void main( void )
 {
-	// Color del cub
-	cubeColor  = vec4(baricentre(vfrontColor[0].xyz,vfrontColor[1].xyz, vfrontColor[2].xyz), 1.0);
 	// Centre real
-	vec3 C = baricentre( gl_in[0].gl_Position.xyz, gl_in[1].gl_Position.xyz, gl_in[2].gl_Position.xyz );
+	vec3 C = centre( gl_in[0].gl_Position.xyz, gl_in[1].gl_Position.xyz, gl_in[2].gl_Position.xyz );
 	// Centre ja aproximat
 	C = step * floor(C / step + 0.5); //el 0.5 es per evitar arrodonir cap avall sempre
 	float side = step;
