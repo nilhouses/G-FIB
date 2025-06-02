@@ -1,2 +1,2 @@
-TARGET     = $$qtLibraryTarget(euler20)
+TARGET     = $$qtLibraryTarget(euler1)
 include(../common.pro)
