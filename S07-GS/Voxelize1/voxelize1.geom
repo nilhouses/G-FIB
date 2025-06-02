@@ -68,11 +68,7 @@ void printCube(vec3 C, float side) {
 
 void main( void )
 {	
-	vec3 v0 = gl_in[0].gl_Position.xyz;
-	vec3 v1 = gl_in[1].gl_Position.xyz;
-	vec3 v2 = gl_in[2].gl_Position.xyz;
-
-	vec3 centreExacte = (v0 + v1 + v2) / 3.0;
+	vec3 centreExacte = baricentre(gl_in[0].gl_Position.xyz, gl_in[1].gl_Position.xyz, gl_in[2].gl_Position.xyz);
 	vec3 centreCuadricula = round(centreExacte / step) * step;
 
 	printCube(centreCuadricula, step);
