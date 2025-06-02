@@ -9,8 +9,7 @@ out vec4 cubeColor;
 out vec2 vtexCoord;
 
 uniform mat4 modelViewProjectionMatrix;
-uniform float step = 0.1;
-
+uniform float step = 0.2;
 
 vec3 baricentre(vec3 v1, vec3 v2, vec3 v3) {
 	return (v1 + v2 + v3) / 3.0;
@@ -28,14 +27,23 @@ void printCube(vec3 C, float side) {
 	v[6] = C + vec3( side/2.0,  side/2.0,  side/2.0);
 	v[7] = C + vec3(-side/2.0,  side/2.0,  side/2.0);
 
-	// Escullo el vèrtex corresponent, vull evitar hardcodejar-ho...
+	//			3_________2
+    //		   /         /|
+	//        /         / |
+	//		7_________6	  |
+	//		|	0	  |	  1
+	//		|		  |	 /
+	//		|		  |	/
+	//		4_________5
+
+
 	int faces[36] = int[36](
 		2, 1, 0, 3, 2, 0, // -Z
-		4, 5, 6, 4, 6, 7, // +Z
-		7, 4, 0, 3, 7, 0, // -X
-		1, 5, 6, 2, 1, 6, // +X
-		4, 5, 1, 0, 4, 1, // -Y
-		6, 3, 7, 6, 2, 3  // +Y
+		7, 4, 5, 6, 7, 5, // +Z
+		3, 0, 4, 7, 3, 4, // -X
+		5, 6, 1, 2, 6, 1, // +X
+		1, 5, 4, 0, 1, 4, // -Y
+		3, 7, 6, 2, 3, 6  // +Y
 	);
 
 	for (int i = 0; i < 6; i++) { // Cara
@@ -47,10 +55,10 @@ void printCube(vec3 C, float side) {
 
 			if (i == 5) { // Cara + Y
 				if (j == 0) vtexCoord = vec2(1.0, 0.0);
-				else if (j == 1) vtexCoord = vec2(0.0, 1.0);
-				else if (j == 2) vtexCoord = vec2(0.0, 0.0);
-				else if (j == 3) vtexCoord = vec2(1.0, 0.0);
-				else if (j == 4) vtexCoord = vec2(1.0, 1.0);
+				else if (j == 1) vtexCoord = vec2(0.0, 0.0);
+				else if (j == 2) vtexCoord = vec2(0.0, 1.0);
+				else if (j == 3) vtexCoord = vec2(1.0, 1.0);
+				else if (j == 4) vtexCoord = vec2(1.0, 0.0);
 				else if (j == 5) vtexCoord = vec2(0.0, 1.0);
 			}
 
@@ -71,3 +79,4 @@ void main( void )
 	float side = step;
 	printCube(C, side);
 }
+
