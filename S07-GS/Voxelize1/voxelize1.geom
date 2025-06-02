@@ -35,14 +35,24 @@ void printCube(vec3 C, float side) {
 	v[6] = C + vec3( side/2.0,  side/2.0,  side/2.0);
 	v[7] = C + vec3(-side/2.0,  side/2.0,  side/2.0);
 
-	// Escullo el vèrtex corresponent, vull evitar hardcodejar-ho...
+	
+	//			3_________2
+    //		   /         /|
+	//        /         / |
+	//		7_________6	  |
+	//		|	0	  |	  1
+	//		|		  |	 /
+	//		|		  |	/
+	//		4_________5
+
+
 	int faces[36] = int[36](
 		2, 1, 0, 3, 2, 0, // -Z
-		4, 5, 6, 4, 6, 7, // +Z
-		7, 4, 0, 3, 7, 0, // -X
-		1, 5, 6, 2, 1, 6, // +X
-		4, 5, 1, 0, 4, 1, // -Y
-		6, 3, 7, 6, 2, 3  // +Y
+		7, 4, 5, 6, 7, 5, // +Z
+		3, 0, 4, 7, 3, 4, // -X
+		5, 6, 1, 2, 6, 1, // +X
+		1, 5, 4, 0, 1, 4, // -Y
+		3, 7, 6, 2, 3, 6  // +Y
 	);
 
 	for (int i = 0; i < 6; i++) { // Cara
@@ -57,18 +67,13 @@ void printCube(vec3 C, float side) {
 }
 
 void main( void )
-{
-	// Centre real
-	//vec3 C = baricentre( gl_in[0].gl_Position.xyz, gl_in[1].gl_Position.xyz, gl_in[2].gl_Position.xyz );
-	// Centre ja aproximat
-	//C = step * floor(C / step + 0.5); //el 0.5 es per evitar arrodonir cap avall sempre
-	
+{	
 	vec3 v0 = gl_in[0].gl_Position.xyz;
 	vec3 v1 = gl_in[1].gl_Position.xyz;
 	vec3 v2 = gl_in[2].gl_Position.xyz;
 
 	vec3 centreExacte = (v0 + v1 + v2) / 3.0;
 	vec3 centreCuadricula = round(centreExacte / step) * step;
+
 	printCube(centreCuadricula, step);
-	
 }
