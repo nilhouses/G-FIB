@@ -1,7 +1,0 @@
-OPCIONALS:
-
-  RGB color space
-  Rubiks
-  Extrude
-  Grass
-
