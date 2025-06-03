@@ -4,8 +4,6 @@ layout (location = 0) in vec3 vertex;
 layout (location = 1) in vec3 normal;
 layout (location = 2) in vec3 color;
 
-out vec4 frontColor;
-
 uniform mat4 modelViewProjectionMatrix;
 uniform mat3 normalMatrix;
 uniform mat4 modelViewMatrix;
@@ -15,7 +13,6 @@ out vec3 P;
 
 void main() { //passa N i P al FS
     N = normalize(normalMatrix * normal);
-    frontColor = vec4(vec3(0.5,0.0,0.5), 1.0);//Lila per provar
     P = (modelViewMatrix * vec4(vertex.xyz,1.0)).xyz;
     gl_Position = modelViewProjectionMatrix * vec4(vertex, 1.0);
 }
