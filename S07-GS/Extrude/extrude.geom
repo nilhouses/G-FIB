@@ -31,18 +31,14 @@ void emitQuad(vec3 v0, vec3 v1, vec3 v2, vec3 v3) {
     if(normal.z < 0) normal.z = -normal.z; // Evita colors negres a segons quins angles de superfícies
     NES = normal;
     gl_Position = modelViewProjectionMatrix * vec4(v0, 1.0); EmitVertex();
-    //NES = normal;
     gl_Position = modelViewProjectionMatrix * vec4(v1, 1.0); EmitVertex();
-    //NES = normal;
     gl_Position = modelViewProjectionMatrix * vec4(v2, 1.0); EmitVertex();
     EndPrimitive();
 
     // Triangle 2: v1, v3, v2
     NES = normal;
     gl_Position = modelViewProjectionMatrix * vec4(v1, 1.0); EmitVertex();
-    //NES = normal;
     gl_Position = modelViewProjectionMatrix * vec4(v3, 1.0); EmitVertex();
-    //NES = normal;
     gl_Position = modelViewProjectionMatrix * vec4(v2, 1.0); EmitVertex();
     EndPrimitive();
 }
