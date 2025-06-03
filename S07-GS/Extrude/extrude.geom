@@ -8,7 +8,7 @@ out vec3 NES;
 
 uniform mat4 modelViewProjectionMatrix;
 uniform mat3 normalMatrix;
-uniform float d = 1.0;
+uniform float d = 0.5;
 
 vec3 mean(vec3 a, vec3 b, vec3 c) {
     return normalize((a + b + c) / 3.0);
@@ -16,12 +16,11 @@ vec3 mean(vec3 a, vec3 b, vec3 c) {
 
 void emitTriangle(vec3 v0, vec3 v1, vec3 v2, vec3 normal) {
     NES = normalize(normalMatrix * normal);
-    gl_Position = modelViewProjectionMatrix * vec4(v0, 1.0);
-    EmitVertex();
-    gl_Position = modelViewProjectionMatrix * vec4(v1, 1.0);
-    EmitVertex();
-    gl_Position = modelViewProjectionMatrix * vec4(v2, 1.0);
-    EmitVertex();
+    gl_Position = modelViewProjectionMatrix * vec4(v0, 1.0); EmitVertex();
+    NES = normalize(normalMatrix * normal);
+    gl_Position = modelViewProjectionMatrix * vec4(v1, 1.0); EmitVertex();
+    NES = normalize(normalMatrix * normal);
+    gl_Position = modelViewProjectionMatrix * vec4(v2, 1.0); EmitVertex();
     EndPrimitive();
 }
 
@@ -29,15 +28,21 @@ void emitTriangle(vec3 v0, vec3 v1, vec3 v2, vec3 normal) {
 void emitQuad(vec3 v0, vec3 v1, vec3 v2, vec3 v3) {
     // Triangle 1: v0, v1, v2
     vec3 normal = normalize(cross(v1 - v0, v2 - v0));
-    NES = normalize(normalMatrix * normal);
+    if(normal.z < 0) normal.z = -normal.z; // Evita colors negres a segons quins angles de superfícies
+    NES = normal;
     gl_Position = modelViewProjectionMatrix * vec4(v0, 1.0); EmitVertex();
+    //NES = normal;
     gl_Position = modelViewProjectionMatrix * vec4(v1, 1.0); EmitVertex();
+    //NES = normal;
     gl_Position = modelViewProjectionMatrix * vec4(v2, 1.0); EmitVertex();
     EndPrimitive();
 
     // Triangle 2: v1, v3, v2
+    NES = normal;
     gl_Position = modelViewProjectionMatrix * vec4(v1, 1.0); EmitVertex();
+    //NES = normal;
     gl_Position = modelViewProjectionMatrix * vec4(v3, 1.0); EmitVertex();
+    //NES = normal;
     gl_Position = modelViewProjectionMatrix * vec4(v2, 1.0); EmitVertex();
     EndPrimitive();
 }
