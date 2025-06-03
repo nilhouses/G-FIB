@@ -32,7 +32,6 @@ void emitTriangle(vec3 v0, vec3 v1, vec3 v2, vec3 normal) {
 }
 
 void emitQuad(vec3 v0, vec3 v1, vec3 v2, vec3 v3) { 
-    // Aquí he fet directament, 3 vèrtex i el 4t s'uneix amb els 2 anteriors
 	NOS = cross(v1-v0,v2-v0);
 
 	gPos = v0;
