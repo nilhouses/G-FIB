@@ -6,7 +6,7 @@ layout(triangle_strip, max_vertices = 36) out;
 out vec4 gfrontColor;
 out vec2 vtexCoord;
 
-// gl_in[i].gl_Position està en OS, caldrà passar a NDC
+// gl_in[i].gl_Position està en OS, caldrà passar a CS, després es passa entre shaders a NDC
 uniform mat4 modelViewProjectionMatrix;
 
 uniform int mode = 3;
