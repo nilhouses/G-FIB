@@ -72,16 +72,14 @@ void printCube(vec3 C, float side) {
 		for (int j = 0; j < 6; j++) { // Els dos triangles que formen la cara
 			gl_Position = modelViewProjectionMatrix * vec4(v[faces[i*6 + j]], 1.0);
 
-			// Coordenades per qualsevol cara diferent de +Y
-			vtexCoord = vec2(-1.0, -1.0);
+			// // Coordenades per qualsevol cara diferent de +Y
+			// vtexCoord = vec2(-1.0, -1.0);
 
 			if (i == 5) { // Cara + Y
-				if (j == 0) vtexCoord = vec2(1.0, 0.0);
+				if (j == 0 || j == 4) vtexCoord = vec2(1.0, 0.0);
 				else if (j == 1) vtexCoord = vec2(0.0, 0.0);
-				else if (j == 2) vtexCoord = vec2(0.0, 1.0);
+				else if (j == 2 || j == 5) vtexCoord = vec2(0.0, 1.0);
 				else if (j == 3) vtexCoord = vec2(1.0, 1.0);
-				else if (j == 4) vtexCoord = vec2(1.0, 0.0);
-				else if (j == 5) vtexCoord = vec2(0.0, 1.0);
 			}
 			gfrontColor = nearestColor(vec4(centre(vfrontColor[0].xyz, vfrontColor[1].xyz, vfrontColor[2].xyz), 1.0));
 			EmitVertex();
