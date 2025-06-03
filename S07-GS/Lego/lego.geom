@@ -5,7 +5,7 @@ layout(triangle_strip, max_vertices = 36) out;
 
 in vec4 vfrontColor[];
 
-out vec2 vtexCoord;
+out vec2 gtexCoord;
 out vec4 gfrontColor;
 
 uniform mat4 modelViewProjectionMatrix;
@@ -73,10 +73,10 @@ void printCube(vec3 C, float side) {
 			gl_Position = modelViewProjectionMatrix * vec4(v[faces[i*6 + j]], 1.0);
 
 			if (i == 5) { // Cara + Y
-				if (j == 0 || j == 4) vtexCoord = vec2(1.0, 0.0);
-				else if (j == 1) vtexCoord = vec2(0.0, 0.0);
-				else if (j == 2 || j == 5) vtexCoord = vec2(0.0, 1.0);
-				else if (j == 3) vtexCoord = vec2(1.0, 1.0);
+				if (j == 0 || j == 4) gtexCoord = vec2(1.0, 0.0);
+				else if (j == 1) gtexCoord = vec2(0.0, 0.0);
+				else if (j == 2 || j == 5) gtexCoord = vec2(0.0, 1.0);
+				else if (j == 3) gtexCoord = vec2(1.0, 1.0);
 			}
 			gfrontColor = nearestColor(vec4(centre(vfrontColor[0].xyz, vfrontColor[1].xyz, vfrontColor[2].xyz), 1.0));
 			EmitVertex();
