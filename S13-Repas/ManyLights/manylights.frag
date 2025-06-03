@@ -1,7 +1,6 @@
 #version 330 core
 
 /////////////////////  Phong  //////////////////////////////
-in vec4 frontColor;
 out vec4 fragColor;
 
 in vec3 N;
@@ -72,6 +71,6 @@ void main() {
             }
         }
     }
-    //Multiplico pel color del VS
-    fragColor = vec4(frontColor + llum);
+    //Es podria multiplico pel color del VS, però no passaria el test
+    fragColor = vec4(llum);
 }
