@@ -1,0 +1,46 @@
+resize 800 600
+loadObject /assig/grau-g/models/glass.obj
+solid
+noaxes
+clearColor 1 1 1
+preset1
+
+resetLightPosition
+
+lightAmbient 0.1 0.1 0.1
+lightDiffuse 1 1 1 
+lightSpecular 1 1 1 
+matShininess 64
+int NUM 5
+float decay 3  
+
+matAmbient 1.0 0.5 0.3
+matDiffuse 1.0 0.7 0.3
+matSpecular 1.0 1.0 1.0
+matShininess 64
+
+
+grab 1
+
+loadObject /assig/grau-g/models/sphere.obj
+preset1
+dist 1.2
+matDiffuse 1.0 0.2 0.1
+float decay 5
+grab 2
+
+loadObject /assig/grau-g/models/boid.obj
+preset1
+yaw 190
+pitch 53
+dist 1
+matDiffuse 0.2 0.4 1.0
+int NUM 5
+float decay 6
+grab 3
+
+int NUM 3
+float decay 3
+grab 4
+
+

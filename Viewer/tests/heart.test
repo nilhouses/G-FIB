@@ -1,0 +1,25 @@
+resize 800 600
+loadObject /assig/grau-g/models/plane.obj
+solid
+noaxes
+clearColor 0.8 0.8 1.0
+resetCamera
+dist 1.2
+float time 0
+int mode 0
+grab 1
+
+
+int mode 1
+grab 2
+
+
+int mode 2
+grab 3
+
+float time 3.14
+int mode 3
+grab 4
+
+clearColor 1 1 1
+

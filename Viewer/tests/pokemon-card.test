@@ -1,0 +1,29 @@
+resize 800 600
+loadObject /assig/grau-g/models/plane.obj
+solid
+noaxes
+clearColor 1 1 1
+resetCamera
+resetLightPosition
+
+unit0 /assig/grau-g/Textures/pikachu.jpg
+unit1 /assig/grau-g/Textures/pikachu_back.jpg
+unit2 /assig/grau-g/Textures/pikachu_foil.jpg
+unit3 /assig/grau-g/Textures/pikachu_mask.jpg
+
+pitch 20
+yaw 20
+
+int mode 0
+grab 1
+
+int mode 0
+yaw 180
+grab 2
+
+int mode 1
+yaw 20
+grab 3
+
+int mode 2
+grab 4

@@ -1,0 +1,25 @@
+resize 800 600
+loadObject /assig/grau-g/models/plane.obj
+unit0 /assig/grau-g/Textures/hole.jpg
+solid
+noaxes
+clearColor 1.0 1.0 1.0
+
+resetLightPosition
+
+resetCamera
+int N 1
+grab 1
+
+int N 2
+grab 2
+ 
+int N 3
+dist 1.4
+grab 3
+
+int N 8
+dist 0.3
+grab 4
+
+

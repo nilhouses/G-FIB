@@ -1,0 +1,27 @@
+resize 800 600
+loadObject /assig/grau-g/models/coin.obj
+solid
+noaxes
+clearColor 1 1 1
+resetCamera
+resetLightPosition
+
+dist 3.0
+pitch 15
+yaw 30
+
+int mode 0
+float time 0
+grab 1
+
+int mode 1
+float time 3.4
+grab 2
+
+int mode 1
+float time 3.85
+grab 3
+
+int mode 1
+float time 5.5
+grab 4
