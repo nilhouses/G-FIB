@@ -1,0 +1,29 @@
+resize 800 600
+loadObject /assig/grau-g/models/plane.obj
+unit0 heart.png	
+solid
+noaxes
+clearColor 1 1 1
+resetLightPosition
+
+preset1
+time 1
+grab 1
+
+preset2
+dist 2.5
+time 4.8
+grab 2
+
+unit0 egg.png
+preset3
+time 5.5
+grab 3
+
+unit0 brstones.jpg
+preset4
+yaw 180
+time 8.5
+grab 4
+
+
