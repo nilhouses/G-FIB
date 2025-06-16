@@ -19,7 +19,7 @@ To use both shaders and plugins, you must have Qt >= 5.15 installed, as well as 
 #### Option 1: Pre-packaged version
 
 Download the pre-configured version I used, which includes all necessary textures and models.  
-You can find it under [Releases](https://github.com/nilhouses/G-FIB/releases).
+You can find it under [Releases](https://github.com/nilhouses/G-FIB/releases/tag/v1.0).
 
 After extracting the viewer, compile it with:
 
