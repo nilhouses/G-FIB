@@ -1,10 +1,10 @@
 # G-FIB
 
-This repository contains GLSL shaders and plugins developed using Qt and OpenGL for the Graphics ("G") course at FIB-UPC.
+This repository contains GLSL shaders and plugins developed using Qt and OpenGL for the Graphics ([G](https://www.fib.upc.edu/ca/estudis/graus/grau-en-enginyeria-informatica/pla-destudis/assignatures/G)) course at FIB-UPC.
 
 ## Contents
 
-- `S01` to `S13`: Shaders and plugins organized by session
+- `S01` to `S13`: Shaders and plugins ordered by the laboratory session in which they were implemented.
 - `C1`: First lab exams
 - `C2`: Second lab exams
 - `Extres`: Extra exercises
@@ -18,8 +18,8 @@ To use both shaders and plugins, you must have Qt >= 5.15 installed, as well as 
 
 #### Option 1: Pre-packaged version
 
-Download the pre-configured version I used, which includes all necessary textures and models.  
-You can find it under [Releases](https://github.com/nilhouses/G-FIB/releases/tag/v1.0).
+Download the pre-configured version I used, which includes all necessary textures and tests.  
+You can find it under [Releases](https://github.com/nilhouses/G-FIB/releases/tag/v1.1).
 
 After extracting the viewer, compile it with:
 
