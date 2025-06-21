@@ -18,8 +18,6 @@ out vec3 P;
 void main() { //passa N i P al FS
     N = normalize(normalMatrix * normal);
     P = (modelViewMatrix * vec4(vertex.xyz,1.0)).xyz;
-    
-    //frontColor = vec4(color,1.0) * N.z;
     vtexCoord = vec2(fract(texCoord.x),fract(texCoord.y));
     gl_Position = modelViewProjectionMatrix * vec4(vertex, 1.0);
 }

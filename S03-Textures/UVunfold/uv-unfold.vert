@@ -12,8 +12,7 @@ uniform vec2 Max=vec2(1,1);
 
 void main() {
     frontColor = vec4(color,1.0);
-    //Es pinta l'escena filtrant per textures, tot i no pintar textures 
-    //Mirar FS també
+
 	float nX = (texCoord.x - Min.x) / (Max.x - Min.x); //[0, 1]
 	float nY = (texCoord.y - Min.y) / (Max.y - Min.y); //[0, 1]
 
