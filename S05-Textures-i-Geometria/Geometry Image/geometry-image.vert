@@ -9,10 +9,10 @@ out vec4 frontColor;
 uniform mat4 modelViewProjectionMatrix;
 uniform mat3 normalMatrix;
 
-uniform sampler2D positionMap;
-uniform sampler2D normalMap1;
+uniform sampler2D positionMap; //bunny-geo.png (a Viewer/textures)
+uniform sampler2D normalMap1; //bunny-norm.png (a Viewer/textures)
 
-uniform int mode = 2;
+uniform int mode = 3; 
 
 //Llum
 uniform vec4 lightAmbient;
@@ -26,7 +26,6 @@ uniform vec4 matDiffuse;
 uniform vec4 matSpecular;
 uniform float matShininess;
 
-//model -> eye space, P l'usa
 uniform mat4 modelViewMatrix; 
 
 vec4 Phong(vec3 N, vec3 V,vec3 L, vec4 P) {
@@ -43,11 +42,11 @@ vec4 Phong(vec3 N, vec3 V,vec3 L, vec4 P) {
 	else return Llum + P * lightDiffuse * Idiff; 
 }
 
-void main() //El test no funciona
+void main() // Cal ignorar el test en aquest exercici, que no té el model actualitzat
 {
 	//(x,y) = [-1,1] -> (s,t) = [0.004, 0.996] 
 	vec2 st =  vertex.xy * vec2((0.966 - 0.004)/2) + 0.5;
-	//Vertex en object space
+	// Vertex en object space
    	vec4 P = texture(positionMap, st); 
     vec4 NObjectSpace = texture(normalMap1, st);
     vec4 NOS = (NObjectSpace - 0.5) * 2; // [0,1] -> [-1, 1]

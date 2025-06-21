@@ -14,8 +14,6 @@ uniform float scale = 0.15;
 
 void main()
 {
-    vec3 N = normalize(normalMatrix * normal);
-
     st = 0.49 * vertex.xy + vec2(0.5);
     float h = texture(heightMap, st).r;
 	vec3 displacedVertex = vertex + normal * scale * h;

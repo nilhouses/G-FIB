@@ -16,10 +16,7 @@ out vec3 VeyeSpace;
 
 void main()
 {
-    vec3 N = normalize(normalMatrix * normal);
-    frontColor = vec4(color,1.0);
-    vtexCoord = texCoord;
-    gl_Position = modelViewProjectionMatrix * vec4(vertex, 1.0);
-    
     VeyeSpace = (modelViewMatrix * vec4(vertex,1.0)).xyz;
+    frontColor = vec4(color,1.0);
+    gl_Position = modelViewProjectionMatrix * vec4(vertex, 1.0);
 }
