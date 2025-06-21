@@ -6,7 +6,6 @@ layout (location = 2) in vec3 color;
 layout (location = 3) in vec2 texCoord;
 
 out vec4 frontColor;
-out vec2 vtexCoord;
 
 uniform mat4 modelViewProjectionMatrix;
 uniform mat3 normalMatrix;
@@ -31,7 +30,7 @@ void main()
 {
     vec3 N = normalize(normalMatrix * normal);
     
-    //1) diagonal caixa contenidora i P'
+    //1) Diagonal caixa contenidora i P'
     float diagonal = length(boundingBoxMax-boundingBoxMin);
     vec3 P = vertex + N*(0.03*diagonal); //diu P però és P'
     
@@ -50,9 +49,10 @@ void main()
     // 5) Il·luminació
     vec3 colorInterpolat = mix(vec3(1.0), vec3(1.0, 0.0, 0.0), t);
     float iluminacio =  clamp(N.z, 0.1, 1.0);
-    // Podria haver usat clamp(N.z, 0.1, 1.0), que retorna N.z si és dins l'interval [0.1,1.0] o el valor fitat que s'hagi superat.
     
+    // 6) Color final
     frontColor = vec4(colorInterpolat*iluminacio,1.0);
-    vtexCoord = texCoord;
+    
+    // 7) Posició final
     gl_Position = modelViewProjectionMatrix * vec4(v, 1.0);
 }

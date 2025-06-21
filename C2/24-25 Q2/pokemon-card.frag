@@ -1,10 +1,10 @@
 #version 330 core
 
-in vec3 NWS;
 in vec2 st;
 out vec4 fragColor;
 
 in vec3 N;
+in vec3 NWS;
 in vec3 V;
 
 uniform sampler2D front0;
@@ -41,9 +41,7 @@ void main()
             vec2 foilMotion = V.xy * vec2(0.5,0.3);
             vec2 foilTexCoordOffset = st + foilMotion;
             float hue = fract(foilTexCoordOffset.x + foilTexCoordOffset.y);
-
             vec3 foil = foilColor(hue);
-
             float reflectiveAngle = dot(V, vec3(0.0,0.0,1.0));
             float reflectiveFactor = 1.4 - reflectiveAngle;
             reflectiveFactor = pow(reflectiveFactor, 0.5);

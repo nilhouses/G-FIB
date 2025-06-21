@@ -20,13 +20,13 @@ uniform float fase = 0.0;
 void main()
 {
     float d = amplitude * sin(2.0*PI*freq*time + fase); 
-    //Efecte "expansió" en direcció a la normal del fragment en qüestió
+    //Efecte "expansió" en direcció a la normal del vèrtex
     vec3 newVertex = vertex + vec3(d)*normal; 
     vec3 N = normalize(normalMatrix * normal);
     // Gris
     // Les normals que em miren tenen component z = 1 (blanc) 
     // La resta de normals va tenint menor z a mesura que no miren cap a mi 
-    frontColor = vec4(N.z); 
+    frontColor = vec4(vec3(N.z), 1.0); 
     vtexCoord = texCoord;
     gl_Position = modelViewProjectionMatrix * vec4(newVertex, 1.0);
 }
