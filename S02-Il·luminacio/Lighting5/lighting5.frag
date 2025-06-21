@@ -41,15 +41,14 @@ vec4 light(vec3 N, vec3 V, vec3 L)
 }
 
 void main() {
-	//No normalitzaré (N,V,L), ho fa phong
-	//Eye space (per defecte)
+    // Eye space (per defecte)
 	vec3 LE = (lightPosition.xyz - PE);
 	vec3 VE = -PE;
 	fragColor = light(NE,VE,LE); 
 	if (world) { //World space
     	vec3 LW = (viewMatrixInverse*vec4(LE,0)).xyz;
     	vec3 VW = (viewMatrixInverse*vec4(VE,0)).xyz; 
-    	fragColor = light(NW,VW,LW); //VW != -PW COMPTE
+    	fragColor = light(NW,VW,LW);
     }
 }
 

@@ -34,7 +34,7 @@ vec4 Phong(vec3 N, vec3 V,vec3 L) {
 
 void main()
 {
-	vec3 N = normalize(N); //Ja estava normalitzada al VS
+	vec3 N = normalize(N); // Ja estava normalitzada al VS
 	vec3 V = normalize(-P);
 	vec3 L = normalize(lightPosition.xyz - P);
     fragColor = Phong(N,V,L);

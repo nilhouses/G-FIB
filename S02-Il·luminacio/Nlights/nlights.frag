@@ -6,7 +6,7 @@ out vec4 fragColor;
 in vec3 N;
 in vec3 P;
 
-//Llum SENSE AMBIENT
+//Llum
 uniform vec4 lightDiffuse;
 uniform vec4 lightSpecular;
 uniform vec4 lightPosition; //eye space
@@ -20,7 +20,7 @@ uniform int n =5;
 ;
 const float pi = 3.141592;
 
-//phong adaptada a l'enunciat (sense ambient i dividint difusa per sqrt(n)
+// Phong (sense ambient i dividint difusa per sqrt(n))
 vec4 llum(vec3 N, vec3 V,vec3 L) { 
 	vec3 R = normalize(2.0*dot(N,L)*N-L);
 	float NdotL = max (0.0, dot(N,L));
@@ -39,7 +39,7 @@ void main()
 	vec3 V = normalize(-P);
 	fragColor = vec4(0.0);
     for(int i = 0; i < n; ++i) {
-    	//angle -> x=r⋅cos(a) i 𝑦=r·sin(a)
+    	//angle -> x = r⋅cos(a) i 𝑦 = r·sin(a)
     	float a = 2.0 * pi * float(i) / n;
         vec3 Lpos = vec3(10 * cos(a), 10 * sin(a), 0.0);
         vec3 L = normalize(Lpos - P);

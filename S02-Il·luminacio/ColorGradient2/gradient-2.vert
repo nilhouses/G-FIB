@@ -25,7 +25,7 @@ vec3 paint(vec3 v) {
    	if (y <= -1.0) return R;
    	else if (y >= 1.0) return B;
    	else { 
-   		y = (y + 1)*2; //m'interessa que vagi [0, 4]
+   		y = (y + 1)*2; // passo a [0, 4]
    		if (y < 1) return mix(R, Y, fract(y));
 		else if (y < 2) return mix(Y, G, fract(y));
 		else if (y < 3) return mix(G, C, fract(y));

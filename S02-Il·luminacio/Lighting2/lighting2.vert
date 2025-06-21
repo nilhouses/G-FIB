@@ -6,7 +6,6 @@ layout (location = 2) in vec3 color;
 layout (location = 3) in vec2 texCoord;
 
 out vec4 frontColor;
-out vec2 vtexCoord;
 
 uniform mat4 modelViewProjectionMatrix;
 uniform mat3 normalMatrix;
@@ -15,7 +14,7 @@ uniform mat3 normalMatrix;
 uniform vec4 lightAmbient;
 uniform vec4 lightDiffuse;
 uniform vec4 lightSpecular;
-uniform vec4 lightPosition; //eye space
+uniform vec4 lightPosition; // eye space
 
 //material
 uniform vec4 matAmbient;
@@ -23,7 +22,7 @@ uniform vec4 matDiffuse;
 uniform vec4 matSpecular;
 uniform float matShininess;
 
-//model -> eye space, P l'usa
+// Per P (model space -> eye space) 
 uniform mat4 modelViewMatrix; 
 
 
@@ -42,13 +41,10 @@ vec4 Phong(vec3 N, vec3 V,vec3 L) {
 
 
 void main() { 
-    // Tot paràmetre de phong normalitzat! (normalize(v)-> v/|v| -> vec3([0,1],[0,1],[0,1]))
-    
-    vec3 N = normalize(normalMatrix * normal); //N (eye space)
-    vec3 P = (modelViewMatrix * vec4(vertex, 1.0)).xyz; // Punt (Eye space)
-    vec3 V = normalize(-P); //Punt -> Observador 
-    vec3 L = normalize(lightPosition.xyz - P); // Punt -> Llum
+    vec3 N = normalize(normalMatrix * normal);  		// N (Eye space)
+    vec3 P = (modelViewMatrix * vec4(vertex, 1.0)).xyz; // P (Eye space)
+    vec3 V = normalize(-P); 							// V (Punt -> Observador) 
+    vec3 L = normalize(lightPosition.xyz - P); 			// L (Punt -> Llum)
     frontColor = Phong(N,V,L);
-    vtexCoord = texCoord;
     gl_Position = modelViewProjectionMatrix * vec4(vertex, 1.0);
 }
