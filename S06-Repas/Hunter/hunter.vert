@@ -14,5 +14,5 @@ void main()
 {
     vec3 N = normalize(normalMatrix * normal);
     vtexCoord = texCoord;
-    gl_Position =  vec4(vertex, 1.0); // IDENTITAT modelViewProjectionMatrix
+    gl_Position =  vec4(vertex, 1.0);
 }

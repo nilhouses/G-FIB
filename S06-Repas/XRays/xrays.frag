@@ -24,7 +24,7 @@ vec2 mouse()
 }
 
 void main() 
-{ //test orientatiu
+{
     float d = distance(vtexCoord * viewport, mouse());
 
     vec4 C = texture(foot0, vtexCoord);
