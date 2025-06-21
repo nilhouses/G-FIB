@@ -3,8 +3,6 @@
 in vec2 vtexCoord;
 out vec4 fragColor;
 
-// Igual que l'1 però ara puc escollir la mida
-
 uniform float n = 10; 
 
 void main()

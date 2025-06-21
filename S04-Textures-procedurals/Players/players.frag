@@ -42,6 +42,7 @@ void main()
 			if (abs((p1-P).x) <= 1.0 && abs((p1-P).y) <= 1.0) {
 			    vec2 st = ((p1-P) + vec2(1.0, 1.0))* 0.5;
 			    vec2 rot = vec2(1.0) - st;
+				rot = vec2(-rot.s, rot.t); 
 			    vec4 col = texture(player1, rot);
 				if (col.x > 0.5 || col.z < 0.5)
 			    	color = col;
@@ -49,6 +50,7 @@ void main()
 			if (abs((p2-P).x) <= 1.0 && abs((p2-P).y) <= 1.0) {
 			    vec2 st = ((p2-P) + vec2(1.0, 1.0))* 0.5;
 			    vec2 rot = vec2(1.0) - st;
+				rot = vec2(-rot.s, rot.t); 
 			    vec4 col = texture(player1, rot);
 				if (col.x > 0.5 || col.z < 0.5)
 			    	color = col;

@@ -18,12 +18,6 @@ float aastep(float threshold, float x)
 void main()
 {
 	float d = distance(vtexCoord,center);
-	//1) STEP -> float alpha = step(r,d);
-	/*2) SMOOTHSTEP (entre 0 i 1)
-	float width = 0.5 * length(vec2(dFdx(d),dFdy(d)));	
-	float alpha = smoothstep(r - width, r + width, d);
-	*/
-	//3) SMOOTHSTEP (entre 0 i 1.4)
 	float alpha = aastep(r, d);
 	vec3 Color = mix(RED, WHITE, alpha);
 	fragColor = vec4(Color,1.0);
